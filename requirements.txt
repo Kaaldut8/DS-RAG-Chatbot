@@ -4,7 +4,9 @@ langchain-ollama
 langsmith
 langchain-text-splitters
 langchain-chroma
-langchain-docling
+langchain-community
 chromadb
 deepeval
 sentence-transformers
+pypdf
+fonttools

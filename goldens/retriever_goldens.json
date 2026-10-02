@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "query": "What is retrieval-augmented generation (RAG), and why does it help a foundation model answer knowledge-intensive questions?",
+    "ideal_answer": "RAG enhances generation by retrieving relevant information from an external memory source and providing it to the model as context. It helps with knowledge-intensive questions because the model does not need to contain all relevant knowledge in its parameters; only information relevant to the query is retrieved and supplied.",
+    "source": "AI Engineering — Chapter 6, RAG and Agents, pp. 253–254"
+  },
+  {
+    "id": 2,
+    "query": "How does embedding-based retrieval work from indexing through query time?",
+    "ideal_answer": "During indexing, data chunks are converted into embeddings and stored in a vector database. At query time, the query is converted into an embedding using the same embedding model, and the retriever returns the k chunks whose embeddings are closest to the query embedding.",
+    "source": "AI Engineering — Chapter 6, RAG and Agents, pp. 260–261"
+  },
+  {
+    "id": 3,
+    "query": "What is the difference between context precision and context recall when evaluating a RAG retriever?",
+    "ideal_answer": "Context precision measures the percentage of retrieved documents that are relevant to the query. Context recall measures the percentage of all documents relevant to the query that were actually retrieved.",
+    "source": "AI Engineering — Chapter 6, RAG and Agents, p. 264"
+  },
+  {
+    "id": 4,
+    "query": "Why would a production RAG system combine term-based retrieval with embedding-based retrieval?",
+    "ideal_answer": "Term-based retrieval is generally fast and handles exact terms well, while embedding-based retrieval focuses on semantic similarity and can handle natural-language queries. Combining them as hybrid search can exploit the strengths of both approaches, including better handling of specific keywords and semantic intent.",
+    "source": "AI Engineering — Chapter 6, RAG and Agents, pp. 260, 265–266"
+  },
+  {
+    "id": 5,
+    "query": "Why is there no universally optimal chunk size for a RAG system?",
+    "ideal_answer": "Smaller chunks can provide more diverse information within the model context, but they can also lose important context and increase the number of chunks, embeddings, storage requirements, and retrieval overhead. Larger chunks preserve more context but reduce how many distinct chunks fit into the model context. The book recommends experimenting to find an appropriate chunk and overlap size.",
+    "source": "AI Engineering — Chapter 6, RAG and Agents, pp. 267–269"
+  },
+  {
+    "id": 6,
+    "query": "What two components make up the loss function of a variational autoencoder (VAE), and what is the purpose of the KL divergence term?",
+    "ideal_answer": "The VAE loss combines reconstruction loss with KL divergence loss. The KL term penalizes the encoded distributions when their parameters differ from a standard normal distribution, encouraging a well-defined and more continuous latent space that can be sampled effectively.",
+    "source": "Generative Deep Learning — Chapter 3, Variational Autoencoders, pp. 80–83"
+  },
+  {
+    "id": 7,
+    "query": "Why does a VAE use a stochastic latent representation instead of simply encoding an input into one deterministic point?",
+    "ideal_answer": "The VAE represents an input using a distribution described by parameters such as z_mean and z_log_var and samples from that distribution. Together with the KL divergence term, this encourages a continuous latent space with fewer gaps between clusters and makes it possible to sample points from the latent distribution to generate new data.",
+    "source": "Generative Deep Learning — Chapter 3, Variational Autoencoders, pp. 80–84"
+  },
+  {
+    "id": 8,
+    "query": "What is mode collapse in a GAN, and why can it occur when the generator overpowers the discriminator?",
+    "ideal_answer": "Mode collapse occurs when the generator learns to produce a small set of nearly identical outputs, or maps many latent inputs to the same output. If the discriminator is too weak, the generator can repeatedly find a mode that fools it, causing its gradients to collapse toward zero and reducing output diversity.",
+    "source": "Generative Deep Learning — Chapter 4, Generative Adversarial Networks, p. 111"
+  },
+  {
+    "id": 9,
+    "query": "What changes does WGAN-GP make compared with a standard GAN to improve training stability?",
+    "ideal_answer": "WGAN-GP uses the Wasserstein loss, labels real and fake examples as 1 and −1, removes the sigmoid from the critic's final layer, adds a gradient-penalty term to the critic loss, and trains the critic multiple times for each generator update. Batch normalization is also not used in the critic.",
+    "source": "Generative Deep Learning — Chapter 4, WGAN-GP, pp. 113–121"
+  },
+  {
+    "id": 10,
+    "query": "Why does GPT need both causal masking and positional encoding?",
+    "ideal_answer": "Causal masking prevents GPT from using future tokens when predicting the current token. Positional encoding supplies information about token order because attention computes relationships in parallel and otherwise does not inherently preserve sequence order.",
+    "source": "Generative Deep Learning — Chapter 9, Transformers, pp. 242–249, 264"
+  },
+  {
+    "id": 11,
+    "query": "Why can accuracy be misleading when evaluating a classifier on a skewed dataset?",
+    "ideal_answer": "When one class is much more frequent than another, a classifier can achieve high accuracy by mostly predicting the majority class while performing poorly on the minority class. The book illustrates this with a classifier that always predicts 'not 5' and still achieves over 90% accuracy on the MNIST binary task.",
+    "source": "Hands-on Machine Learning — Chapter 3, Classification, pp. 90–92"
+  },
+  {
+    "id": 12,
+    "query": "What do the four entries of a binary classification confusion matrix represent?",
+    "ideal_answer": "True positives are positive instances correctly classified as positive; true negatives are negative instances correctly classified as negative; false positives are negative instances incorrectly classified as positive; and false negatives are positive instances incorrectly classified as negative.",
+    "source": "Hands-on Machine Learning — Chapter 3, Classification, pp. 92–94"
+  },
+  {
+    "id": 13,
+    "query": "What is the difference between precision and recall for a binary classifier?",
+    "ideal_answer": "Precision is the fraction of positive predictions that are correct: TP/(TP+FP). Recall is the fraction of actual positive instances that the classifier correctly detects: TP/(TP+FN).",
+    "source": "Hands-on Machine Learning — Chapter 3, Classification, pp. 93–94"
+  },
+  {
+    "id": 14,
+    "query": "What is the purpose of regularization, and what happens if the regularization constraint is made too strong?",
+    "ideal_answer": "Regularization constrains the model so that it fits the training data less aggressively, reducing the risk of overfitting and improving generalization. If the regularization strength is made too large, the model can become overly constrained and may fail to find a good solution, leading to underfitting.",
+    "source": "Hands-on Machine Learning — Chapter 1, The Machine Learning Landscape, pp. 28–30"
+  },
+  {
+    "id": 15,
+    "query": "What does the explained variance ratio of a PCA component tell you, and how can it help choose the number of components?",
+    "ideal_answer": "The explained variance ratio indicates the proportion of the dataset's variance that lies along a principal component. The ratios can be accumulated to choose enough components to preserve a desired amount of variance, such as 95%, instead of selecting the number of dimensions arbitrarily.",
+    "source": "Hands-on Machine Learning — Chapter 8, Dimensionality Reduction, pp. 224–226"
+  }
+]

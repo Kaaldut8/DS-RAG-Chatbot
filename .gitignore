@@ -10,4 +10,5 @@ wheels/
 .venv
 
 # Data files
-data/
+/data
+/chroma_store
