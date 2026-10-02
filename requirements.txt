@@ -1,0 +1,10 @@
+langchain
+langchain-openai
+langchain-ollama
+langsmith
+langchain-text-splitters
+langchain-chroma
+langchain-docling
+chromadb
+deepeval
+sentence-transformers
