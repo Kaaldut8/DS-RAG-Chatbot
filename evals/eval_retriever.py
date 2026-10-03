@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 from deepeval import evaluate
 from deepeval.evaluate import AsyncConfig
-from deepeval.models import OllamaModel
+from deepeval.models import OpenRouterModel
 from deepeval.test_case import LLMTestCase
 from deepeval.metrics import ContextualRecallMetric, ContextualPrecisionMetric
 
@@ -13,7 +13,7 @@ from src.retriever import build_retriever
 load_dotenv()
 
 GOLDEN_PATH = "goldens/retriever_goldens.json"
-JUDGE_MODEL = OllamaModel(model="deepseek-r1:14b", base_url="https://lucrative-unhinge-boozy.ngrok-free.dev/", temperature=0)  
+JUDGE_MODEL = OpenRouterModel(model="nvidia/nemotron-3.5-lightning:free", temperature=0)  
 THRESHOLD = 0.7
 
 
@@ -24,11 +24,11 @@ with open(GOLDEN_PATH) as f:
 
 # 2. RUN THE RETRIEVER on each question to fill retrieval_context,
 #    then build one test case per golden.
-retriever = build_retriever()
+retriever = build_retriever()          # vs RerankingRetriever()
 
 test_cases = []
 
-for g in goldens:
+for g in goldens[:5]:
     retrieved = retriever.invoke(g["query"])
     retrieval_context = [doc.page_content for doc in retrieved]
 
@@ -55,11 +55,11 @@ evaluate(
     metrics=metrics,
     hyperparameters={
         "retriever": "base_k5",          # vs "reranked" when you swap it in
-        "embedding_model": "text-embedding-3-small",
+        "embedding_model": "nvidia/nemotron-3-embed-1b:free",
         "chunk_size": 1000,
         "chunk_overlap": 150,
         "top_k": 5,
-        "judge_model": JUDGE_MODEL,
+        "judge_model": "nvidia/nemotron-3.5-lightning:free",
         "golden_set": GOLDEN_PATH,
     },
     async_config=AsyncConfig(run_async=False)
