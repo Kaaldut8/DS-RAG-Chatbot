@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 from deepeval import evaluate
 from deepeval.evaluate import AsyncConfig
-from deepeval.models import OpenRouterModel
+from deepeval.models import OllamaModel
 from deepeval.test_case import LLMTestCase
 from deepeval.metrics import ContextualRecallMetric, ContextualPrecisionMetric
 
@@ -13,7 +13,7 @@ from src.retriever import build_retriever
 load_dotenv()
 
 GOLDEN_PATH = "goldens/retriever_goldens.json"
-JUDGE_MODEL = OpenRouterModel(model="nvidia/nemotron-3.5-lightning:free", temperature=0)  
+JUDGE_MODEL = OllamaModel(model="deepseek-r1:14b", temperature=0)
 THRESHOLD = 0.7
 
 

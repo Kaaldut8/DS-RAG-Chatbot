@@ -2,7 +2,7 @@ import os
 import re
 
 from langchain_community.document_loaders import PyPDFDirectoryLoader
-from langchain_openai import OpenAIEmbeddings
+from langchain_ollama import OllamaEmbeddings
 from langchain_chroma import Chroma
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
@@ -27,13 +27,7 @@ def load_books():
 
 
 def load_store():
-    embeddings = OpenAIEmbeddings(
-        model="nvidia/nemotron-3-embed-1b:free",
-        base_url="https://openrouter.ai/api/v1",
-        api_key=os.environ.get("OPENROUTER_API_KEY"),
-        check_embedding_ctx_length=False,
-        chunk_size=256
-    )
+    embeddings = OllamaEmbeddings(model="qwen3-embedding:0.6b")
 
     if os.path.exists(DB_DIR):
         print("Loading existing Chroma...")
