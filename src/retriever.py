@@ -39,7 +39,8 @@ def load_store():
 
         print("Documents in Chroma:", store._collection.count())
 
-        return store
+        if store._collection.count() > 0:
+            return store
 
     print("Creating new Chroma...")
 
