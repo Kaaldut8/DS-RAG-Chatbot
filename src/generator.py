@@ -16,6 +16,11 @@ from langchain_ollama import ChatOllama
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 # ---------------------------------------------------------------------------
 # LLM
@@ -23,6 +28,7 @@ from langchain_core.output_parsers import StrOutputParser
 
 llm = ChatOllama(
     model="llama3.1",
+    base_url="https://lucrative-unhinge-boozy.ngrok-free.dev/",
     temperature=0,
 )
 

@@ -1,0 +1,92 @@
+[
+  {
+    "id": "SK001",
+    "question": "What is the main idea behind linear regression in scikit-learn?",
+    "ideal_answer": "Linear regression models the relationship between the target and input features as a linear combination of the features. In scikit-learn, LinearRegression fits the coefficients by minimizing the residual sum of squares between the observed targets and the predictions.",
+    "source_session": "scikit-learn — Linear Models"
+  },
+  {
+    "id": "SK002",
+    "question": "What is the difference between Ridge regression and ordinary least squares regression?",
+    "ideal_answer": "Ridge regression adds an L2 regularization penalty to the ordinary least squares objective. This penalizes large coefficient values and can help reduce overfitting, whereas ordinary least squares minimizes the residual sum of squares without an L2 penalty.",
+    "source_session": "scikit-learn — Linear Models"
+  },
+  {
+    "id": "SK003",
+    "question": "What is the purpose of Lasso regression?",
+    "ideal_answer": "Lasso regression adds an L1 regularization penalty to the linear regression objective. The L1 penalty can drive some coefficients exactly to zero, which makes Lasso useful for obtaining sparse models and performing feature selection.",
+    "source_session": "scikit-learn — Linear Models"
+  },
+  {
+    "id": "SK004",
+    "question": "What is the key difference between classification and regression for support vector machines?",
+    "ideal_answer": "Support vector classification is used to predict discrete class labels, while support vector regression is used to predict continuous target values. Both use the support vector machine framework but optimize objectives appropriate to their respective tasks.",
+    "source_session": "scikit-learn — Support Vector Machines"
+  },
+  {
+    "id": "SK005",
+    "question": "Why is feature scaling important when using support vector machines?",
+    "ideal_answer": "Support vector machine methods are sensitive to the scale of the input features. Features with much larger numerical ranges can dominate the optimization and distance calculations, so scaling features to comparable ranges is often important for obtaining good performance.",
+    "source_session": "scikit-learn — Support Vector Machines"
+  },
+  {
+    "id": "SK006",
+    "question": "What is the purpose of stochastic gradient descent in scikit-learn?",
+    "ideal_answer": "Stochastic gradient descent provides an efficient optimization approach for fitting linear models, especially on large datasets. Instead of computing the gradient over the entire training set for every update, it uses individual samples or small subsets to perform iterative updates.",
+    "source_session": "scikit-learn — Stochastic Gradient Descent"
+  },
+  {
+    "id": "SK007",
+    "question": "How does k-nearest neighbors classification make a prediction?",
+    "ideal_answer": "A k-nearest neighbors classifier identifies the k training samples that are closest to a new sample according to the chosen distance metric and predicts its class based on the classes of those neighbors, typically using a majority vote.",
+    "source_session": "scikit-learn — Nearest Neighbors"
+  },
+  {
+    "id": "SK008",
+    "question": "What is the main idea behind Gaussian process regression?",
+    "ideal_answer": "Gaussian process regression places a probabilistic model over functions and uses the observed training data to obtain a posterior distribution over possible functions. Predictions therefore provide both an estimated mean and uncertainty information.",
+    "source_session": "scikit-learn — Gaussian Processes"
+  },
+  {
+    "id": "SK009",
+    "question": "What is the purpose of Naive Bayes classifiers?",
+    "ideal_answer": "Naive Bayes classifiers apply Bayes' theorem with a simplifying assumption that features are conditionally independent given the class. This makes them computationally efficient and useful for classification tasks, particularly when working with high-dimensional feature spaces.",
+    "source_session": "scikit-learn — Naive Bayes"
+  },
+  {
+    "id": "SK010",
+    "question": "How does a decision tree make predictions?",
+    "ideal_answer": "A decision tree recursively partitions the feature space using decision rules based on feature values. For classification, the resulting leaf determines the predicted class, while for regression the leaf provides a predicted numerical value.",
+    "source_session": "scikit-learn — Decision Trees"
+  },
+  {
+    "id": "SK011",
+    "question": "Why can an ensemble of decision trees perform better than a single decision tree?",
+    "ideal_answer": "An ensemble combines predictions from multiple decision trees, allowing the overall model to reduce some of the weaknesses of an individual tree. Different ensemble methods use strategies such as averaging, randomization, or sequentially correcting errors to improve predictive performance and generalization.",
+    "source_session": "scikit-learn — Ensemble Methods"
+  },
+  {
+    "id": "SK012",
+    "question": "What is the purpose of feature selection in machine learning?",
+    "ideal_answer": "Feature selection identifies a subset of the available features that are useful for predicting the target. Removing irrelevant or redundant features can simplify the model, reduce computational cost, and potentially improve generalization.",
+    "source_session": "scikit-learn — Feature Selection"
+  },
+  {
+    "id": "SK013",
+    "question": "What is the purpose of calibration for a classification model?",
+    "ideal_answer": "Calibration assesses or adjusts whether a classifier's predicted probabilities correspond well to the actual frequency of outcomes. A well-calibrated classifier producing a probability such as 0.8 should correspond to an outcome occurring approximately 80 percent of the time among similarly predicted samples.",
+    "source_session": "scikit-learn — Probability Calibration"
+  },
+  {
+    "id": "SK014",
+    "question": "Why are cross-validation and model selection useful when training a machine learning model?",
+    "ideal_answer": "Cross-validation evaluates a model across multiple train-validation splits instead of relying on a single split. This provides a more reliable estimate of generalization performance and can be used to compare models or tune hyperparameters while reducing dependence on one particular train-test partition.",
+    "source_session": "scikit-learn — Cross-Validation and Model Selection"
+  },
+  {
+    "id": "SK015",
+    "question": "What is the purpose of semi-supervised learning in scikit-learn?",
+    "ideal_answer": "Semi-supervised learning is useful when only part of the available training data has labels. It combines labeled and unlabeled examples so that the unlabeled data can contribute information to the learning process, which can be useful when obtaining labels is expensive.",
+    "source_session": "scikit-learn — Semi-Supervised Learning"
+  }
+]

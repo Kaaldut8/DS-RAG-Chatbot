@@ -1,7 +1,8 @@
 import os
-import re
+import json
+import bs4
 
-from langchain_community.document_loaders import PyPDFDirectoryLoader
+from langchain_community.document_loaders import WebBaseLoader
 from langchain_ollama import OllamaEmbeddings
 from langchain_chroma import Chroma
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -12,22 +13,43 @@ DB_DIR = "chroma_store"
 from dotenv import load_dotenv
 load_dotenv()
 
-def load_books():
-    loader = PyPDFDirectoryLoader(DATA_DIR)
-    docs = loader.load()
+def load_data():
+    with open("data/scikit_learn.json", "r", encoding="utf-8") as f:
+        SCIKIT_LEARN_URLS = json.load(f)
 
-    for doc in docs:
-        text = re.sub(r"[ \t]+", " ", doc.page_content)
-        text = re.sub(r"\n{3,}", "\n\n", text)
-        text = text.encode("utf-8", errors="replace").decode("utf-8")
-        doc.page_content = text.strip()
+    docs = []
+
+    for category_dict in SCIKIT_LEARN_URLS:
+        for category, urls in category_dict.items():
+            loader = WebBaseLoader(
+                web_paths=urls,
+                requests_per_second=2,
+                bs_kwargs={
+                    "parse_only": bs4.SoupStrainer(
+                        "article",
+                        class_="bd-article"
+                    )
+                },
+                bs_get_text_kwargs={
+                    "separator": "\n",
+                    "strip": True
+                }
+            )
+
+            cateogry_docs = loader.load()
+
+            for doc in cateogry_docs:
+                doc.metadata["category"] = category
+                doc.metadata["library"] = "scikit-learn"
+
+            docs.extend(cateogry_docs)
 
     return docs
 
 
 
 def load_store():
-    embeddings = OllamaEmbeddings(model="qwen3-embedding:0.6b")
+    embeddings = OllamaEmbeddings(model="qwen3-embedding:4b", base_url="https://lucrative-unhinge-boozy.ngrok-free.dev/")
 
     if os.path.exists(DB_DIR):
         print("Loading existing Chroma...")
@@ -44,14 +66,14 @@ def load_store():
 
     print("Creating new Chroma...")
 
-    docs = load_books()
+    docs = load_data()
 
     chunks = RecursiveCharacterTextSplitter(
-        chunk_size=1000,
-        chunk_overlap=150,
+        chunk_size=800,
+        chunk_overlap=100,
     ).split_documents(docs)
 
-    print("PDF documents:", len(docs))
+    print("Web Pages:", len(docs))
     print("Chunks:", len(chunks))
 
     store = Chroma.from_documents(
@@ -74,7 +96,7 @@ def build_retriever():
 if __name__ == "__main__":
     retriever = build_retriever()
 
-    results = retriever.invoke("what is Machine Learning?")
+    results = retriever.invoke("what is Supervised Learning?")
     
     for r in results:
         print(f"{r.page_content[:150]}...\n")

@@ -1,9 +1,11 @@
 # eval_retriever.py
+import os
+
 from dotenv import load_dotenv
 
 from deepeval import evaluate
 from deepeval.evaluate import AsyncConfig
-from deepeval.models import OllamaModel
+from deepeval.models import OpenAIModel
 from deepeval.test_case import LLMTestCase
 from deepeval.metrics import ContextualRecallMetric, ContextualPrecisionMetric
 
@@ -12,8 +14,13 @@ from evals.harness import load_goldens, summarize_by_metric, print_summary
 
 load_dotenv()
 
+os.environ["DEEPEVAL_PER_ATTEMPT_TIMEOUT_SECONDS_OVERRIDE"] = "300"
+
 GOLDEN_PATH = "goldens/retriever_goldens.json"
-JUDGE_MODEL = OllamaModel(model="deepseek-r1:14b", temperature=0)  # NOTE: differs from the other evals (gpt-4o-mini)
+JUDGE_MODEL = OpenAIModel(model="google/gemma-4-31b-it:free",
+                          base_url="https://www.zerolimitai.com/api/v1",
+                          api_key=os.getenv("ZEROLIMIT_API_KEY"),
+                          temperature=0)
 THRESHOLD = 0.7
 
 
@@ -50,21 +57,21 @@ def run(retriever):
         metrics=metrics,
         hyperparameters={
             "retriever": "reranker",          # vs "reranked" when you swap it in
-            "embedding_model": "qwen3-embedding:0.6b",
-            "chunk_size": 750,
+            "embedding_model": "qwen3-embedding:4b",
+            "chunk_size": 800,
             "chunk_overlap": 100,
             "top_k": 5,
-            "judge_model": "deepseek-r1:14b",
+            "judge_model": "google/gemma-4-31b-it:free",
             "golden_set": GOLDEN_PATH,
         },
-        async_config=AsyncConfig(run_async=False),
+        async_config=AsyncConfig(run_async=True)
     )
     return summarize_by_metric(result)
 
 
 def run_local():
     """Standalone convenience: build the retriever, then run."""
-    return run(RerankingRetriever())
+    return run(RerankingRetriever(fetch_k=20, top_k=5))
 
 
 if __name__ == "__main__":
