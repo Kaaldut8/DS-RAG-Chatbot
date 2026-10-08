@@ -22,18 +22,19 @@ from deepeval.evaluate import AsyncConfig
 from deepeval.test_case import LLMTestCase
 from deepeval.metrics import FaithfulnessMetric, AnswerRelevancyMetric
 
-from src.generator import generate
-from evals.harness import load_goldens, summarize_by_metric, print_summary
-
 load_dotenv()
 
 GOLDEN_PATH = "goldens/faithfulness_dataset.json"
-JUDGE_MODEL = OpenAIModel(model="google/gemma-4-26b-a4b-it:free",
+JUDGE_MODEL = OpenAIModel(model="google/gemma-4-31b-it:free",
                           base_url="https://www.zerolimitai.com/api/v1",
                           api_key=os.getenv("ZEROLIMIT_API_KEY"),
                           temperature=0)
 THRESHOLD = 0.7
 
+from src.generator import generate
+from evals.harness import load_goldens, summarize_by_metric, print_summary
+
+os.environ["DEEPEVAL_PER_ATTEMPT_TIMEOUT_SECONDS_OVERRIDE"] = "300"
 
 def run():
     # 1. LOAD the faithfulness golden set (query + ideal_context)
@@ -69,7 +70,7 @@ def run():
     ]
 
     # 4. EVALUATE --- runs the metrics on every case, prints a report
-    result = evaluate(test_cases=test_cases, metrics=metrics, async_config=AsyncConfig(run_async=True))
+    result = evaluate(test_cases=test_cases, metrics=metrics, async_config=AsyncConfig(max_concurrent=5))
     return summarize_by_metric(result)
 
 

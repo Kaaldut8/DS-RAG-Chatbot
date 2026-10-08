@@ -49,7 +49,7 @@ def load_data():
 
 
 def load_store():
-    embeddings = OllamaEmbeddings(model="qwen3-embedding:4b", base_url="https://lucrative-unhinge-boozy.ngrok-free.dev/")
+    embeddings = OllamaEmbeddings(model="qwen3-embedding:4b")
 
     if os.path.exists(DB_DIR):
         print("Loading existing Chroma...")
@@ -97,6 +97,6 @@ if __name__ == "__main__":
     retriever = build_retriever()
 
     results = retriever.invoke("what is Supervised Learning?")
-    
+
     for r in results:
         print(f"{r.page_content[:150]}...\n")

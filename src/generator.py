@@ -28,8 +28,7 @@ load_dotenv()
 
 llm = ChatOllama(
     model="llama3.1",
-    base_url="https://lucrative-unhinge-boozy.ngrok-free.dev/",
-    temperature=0,
+    temperature=0
 )
 
 

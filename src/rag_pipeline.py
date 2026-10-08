@@ -1,5 +1,3 @@
-from src.reranker import RerankingRetriever
-from src.generator import generate
 from langsmith import traceable
 
 
@@ -30,7 +28,7 @@ class RagPipeline:
 
 # quick manual smoke test: python -m src.rag_pipeline
 if __name__ == "__main__":
-    
+
     rag = RagPipeline()
     result = rag.invoke("What is the difference between Ridge and Lasso regularization?")
     print("QUERY:  ", result["query"])

@@ -1,5 +1,4 @@
 from sentence_transformers import CrossEncoder
-from src.retriever import load_store
 from langsmith import traceable
 
 # small, fast, CPU-friendly reranker. Downloads once (~80MB) on first run.

@@ -9,10 +9,10 @@ from deepeval.models import OpenAIModel
 from deepeval.test_case import LLMTestCase
 from deepeval.metrics import ContextualRecallMetric, ContextualPrecisionMetric
 
-from src.reranker import RerankingRetriever
-from evals.harness import load_goldens, summarize_by_metric, print_summary
-
 load_dotenv()
+
+from evals.harness import load_goldens, summarize_by_metric, print_summary
+from src.reranker import RerankingRetriever
 
 os.environ["DEEPEVAL_PER_ATTEMPT_TIMEOUT_SECONDS_OVERRIDE"] = "300"
 
@@ -64,14 +64,14 @@ def run(retriever):
             "judge_model": "google/gemma-4-31b-it:free",
             "golden_set": GOLDEN_PATH,
         },
-        async_config=AsyncConfig(run_async=True)
+        async_config=AsyncConfig(max_concurrent=5)
     )
     return summarize_by_metric(result)
 
 
 def run_local():
     """Standalone convenience: build the retriever, then run."""
-    return run(RerankingRetriever(fetch_k=20, top_k=5))
+    return run(RerankingRetriever())
 
 
 if __name__ == "__main__":

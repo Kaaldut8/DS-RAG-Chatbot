@@ -13,10 +13,10 @@ from deepeval.metrics import (
     ContextualRelevancyMetric,
 )
 
-from evals.harness import load_goldens, summarize_by_metric, print_summary
-from src.rag_pipeline import RagPipeline
-
 load_dotenv()
+
+from src.rag_pipeline import RagPipeline
+from evals.harness import load_goldens, summarize_by_metric, print_summary
 
 os.environ["DEEPEVAL_PER_ATTEMPT_TIMEOUT_SECONDS_OVERRIDE"] = "300"
 
@@ -52,13 +52,13 @@ def run(rag):
     ]
 
     # 4. EVALUATE
-    result = evaluate(test_cases=test_cases, metrics=metrics, async_config=AsyncConfig(run_async=True, max_concurrent=2))
+    result = evaluate(test_cases=test_cases, metrics=metrics, async_config=AsyncConfig(max_concurrent=3))
     return summarize_by_metric(result)
 
 
 def run_local():
     """Standalone convenience: build the pipeline, then run."""
-    return run(RagPipeline(fetch_k=20, top_k=5))
+    return run(RagPipeline())
 
 
 if __name__ == "__main__":

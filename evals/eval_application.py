@@ -10,10 +10,10 @@ from deepeval.test_case import LLMTestCase, SingleTurnParams
 from deepeval.metrics import GEval
 from deepeval.metrics.g_eval import Rubric
 
+load_dotenv()
+
 from src.rag_pipeline import RagPipeline
 from evals.harness import load_goldens, summarize_by_metric, print_summary
-
-load_dotenv()
 
 GOLDEN_PATH = "goldens/correctness_goldens.json"
 JUDGE_MODEL = OpenAIModel(model="google/gemma-4-31b-it:free",
@@ -180,73 +180,8 @@ def run(rag):
         strict_mode=False,
     )
 
-    # =========================================================
-    # STYLE
-    # =========================================================
-
-    style = GEval(
-        name="Style",
-
-        evaluation_steps=[
-            "Judge only the quality of the explanation and teaching style.",
-            "The answer should directly answer the Data Science question without unnecessary discussion.",
-            "Prefer clear, simple language that makes technical concepts easy to understand.",
-            "Technical terms such as embeddings, regularization, precision, recall, latent space, attention, or reranking should be explained naturally when the target audience may not already understand them.",
-            "Prefer an intuitive explanation before introducing formulas or highly technical details when appropriate.",
-            "The answer should feel like a knowledgeable Data Science instructor explaining a concept to a learner.",
-            "A concise example or analogy is useful for abstract concepts, but an answer must not be penalized for omitting an analogy when the explanation is already clear.",
-            "Penalize unnecessary verbosity, repetition, excessive sectioning, unexplained jargon, or robotic wording.",
-            "Do not require bullet points or prose specifically. Use whatever structure makes the explanation clearest.",
-            "Do not judge factual correctness or completeness in this metric.",
-        ],
-
-        rubric=[
-            Rubric(
-                score_range=(9, 10),
-                expected_outcome=(
-                    "Clear, intuitive, concise, and natural Data Science "
-                    "teaching style. The explanation is easy to follow "
-                    "and appropriately technical for the question."
-                ),
-            ),
-
-            Rubric(
-                score_range=(7, 8),
-                expected_outcome=(
-                    "Clear and useful explanation with only minor issues "
-                    "such as slightly formal wording, verbosity, or jargon."
-                ),
-            ),
-
-            Rubric(
-                score_range=(4, 6),
-                expected_outcome=(
-                    "Understandable but somewhat confusing, overly formal, "
-                    "verbose, repetitive, or jargon-heavy."
-                ),
-            ),
-
-            Rubric(
-                score_range=(0, 3),
-                expected_outcome=(
-                    "Very difficult to follow, robotic, excessively verbose, "
-                    "poorly structured, or filled with unexplained jargon."
-                ),
-            ),
-        ],
-
-        evaluation_params=[
-            SingleTurnParams.INPUT,
-            SingleTurnParams.ACTUAL_OUTPUT,
-        ],
-
-        threshold=THRESHOLD,
-        model=JUDGE_MODEL,
-        strict_mode=False,
-    )
-
     # ---------------------------------------------------------
-    # 4. RUN EVALUATION
+    # 3. RUN EVALUATION
     # ---------------------------------------------------------
 
     result = evaluate(
@@ -254,7 +189,6 @@ def run(rag):
         metrics=[
             correctness,
             completeness,
-            style,
         ],
     )
 
