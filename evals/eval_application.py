@@ -5,6 +5,7 @@ import os
 from dotenv import load_dotenv
 
 from deepeval import evaluate
+from deepeval.evaluate import AsyncConfig
 from deepeval.models import OpenAIModel
 from deepeval.test_case import LLMTestCase, SingleTurnParams
 from deepeval.metrics import GEval
@@ -16,10 +17,14 @@ from src.rag_pipeline import RagPipeline
 from evals.harness import load_goldens, summarize_by_metric, print_summary
 
 GOLDEN_PATH = "goldens/correctness_goldens.json"
-JUDGE_MODEL = OpenAIModel(model="google/gemma-4-31b-it:free",
+JUDGE_MODEL = OpenAIModel(model="openai/gpt-oss-20b",
                           base_url="https://www.zerolimitai.com/api/v1",
                           api_key=os.getenv("ZEROLIMIT_API_KEY"),
                           temperature=0)
+# JUDGE_MODEL = OpenAIModel(model="nvidia/nemotron-3-super-120b-a12b",
+#                           base_url="https://integrate.api.nvidia.com/v1",
+#                           api_key=os.getenv("NVIDIA_API_KEY"),
+#                           temperature=0)
 THRESHOLD = 0.7
 
 
@@ -190,6 +195,7 @@ def run(rag):
             correctness,
             completeness,
         ],
+        async_config=AsyncConfig(max_concurrent=3)
     )
 
     return summarize_by_metric(result)

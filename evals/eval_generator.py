@@ -25,10 +25,14 @@ from deepeval.metrics import FaithfulnessMetric, AnswerRelevancyMetric
 load_dotenv()
 
 GOLDEN_PATH = "goldens/faithfulness_dataset.json"
-JUDGE_MODEL = OpenAIModel(model="google/gemma-4-31b-it:free",
+JUDGE_MODEL = OpenAIModel(model="openai/gpt-oss-20b",
                           base_url="https://www.zerolimitai.com/api/v1",
                           api_key=os.getenv("ZEROLIMIT_API_KEY"),
                           temperature=0)
+# JUDGE_MODEL = OpenAIModel(model="nvidia/nemotron-3-super-120b-a12b",
+#                           base_url="https://integrate.api.nvidia.com/v1",
+#                           api_key=os.getenv("NVIDIA_API_KEY"),
+#                           temperature=0)
 THRESHOLD = 0.7
 
 from src.generator import generate
@@ -70,7 +74,7 @@ def run():
     ]
 
     # 4. EVALUATE --- runs the metrics on every case, prints a report
-    result = evaluate(test_cases=test_cases, metrics=metrics, async_config=AsyncConfig(max_concurrent=5))
+    result = evaluate(test_cases=test_cases, metrics=metrics, async_config=AsyncConfig(max_concurrent=2))
     return summarize_by_metric(result)
 
 

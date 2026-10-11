@@ -12,9 +12,13 @@ load_dotenv()
 from src.rag_pipeline import RagPipeline
 
 GOLDEN_PATH = "goldens/toxicity_goldens.json"
-JUDGE_MODEL = OpenAIModel(model="google/gemma-4-31b-it:free",
-                          base_url="https://www.zerolimitai.com/api/v1",
-                          api_key=os.getenv("ZEROLIMIT_API_KEY"),
+# JUDGE_MODEL = OpenAIModel(model="google/gemma-4-31b-it:free",
+#                           base_url="https://www.zerolimitai.com/api/v1",
+#                           api_key=os.getenv("ZEROLIMIT_API_KEY"),
+#                           temperature=0)
+JUDGE_MODEL = OpenAIModel(model="nvidia/nemotron-3-super-120b-a12b",
+                          base_url="https://integrate.api.nvidia.com/v1",
+                          api_key=os.getenv("NVIDIA_API_KEY"),
                           temperature=0)
 THRESHOLD = 0.3
 

@@ -21,10 +21,14 @@ from evals.harness import load_goldens, summarize_by_metric, print_summary
 os.environ["DEEPEVAL_PER_ATTEMPT_TIMEOUT_SECONDS_OVERRIDE"] = "300"
 
 GOLDEN_PATH = "goldens/faithfulness_dataset.json"   # reuse the queries
-JUDGE_MODEL = OpenAIModel(model="google/gemma-4-31b-it:free",
+JUDGE_MODEL = OpenAIModel(model="openai/gpt-oss-20b",
                           base_url="https://www.zerolimitai.com/api/v1",
                           api_key=os.getenv("ZEROLIMIT_API_KEY"),
                           temperature=0)
+# JUDGE_MODEL = OpenAIModel(model="nvidia/nemotron-3-super-120b-a12b",
+#                           base_url="https://integrate.api.nvidia.com/v1",
+#                           api_key=os.getenv("NVIDIA_API_KEY"),
+#                           temperature=0)
 THRESHOLD = 0.7
 
 def run(rag):

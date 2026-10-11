@@ -36,7 +36,7 @@ def load_data():
                 }
             )
 
-            cateogry_docs = loader.load()
+            cateogry_docs = loader.lazy_load()
 
             for doc in cateogry_docs:
                 doc.metadata["category"] = category
@@ -49,7 +49,7 @@ def load_data():
 
 
 def load_store():
-    embeddings = OllamaEmbeddings(model="qwen3-embedding:4b")
+    embeddings = OllamaEmbeddings(model="qwen3-embedding:4b", base_url="https://lucrative-unhinge-boozy.ngrok-free.dev/")
 
     if os.path.exists(DB_DIR):
         print("Loading existing Chroma...")
