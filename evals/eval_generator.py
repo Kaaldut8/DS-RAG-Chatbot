@@ -25,7 +25,7 @@ from deepeval.metrics import FaithfulnessMetric, AnswerRelevancyMetric
 load_dotenv()
 
 GOLDEN_PATH = "goldens/faithfulness_dataset.json"
-JUDGE_MODEL = OpenAIModel(model="openai/gpt-oss-20b",
+JUDGE_MODEL = OpenAIModel(model="openai/gpt-oss-120b",
                           base_url="https://www.zerolimitai.com/api/v1",
                           api_key=os.getenv("ZEROLIMIT_API_KEY"),
                           temperature=0)

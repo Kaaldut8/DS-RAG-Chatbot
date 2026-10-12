@@ -17,7 +17,7 @@ from src.rag_pipeline import RagPipeline
 from evals.harness import load_goldens, summarize_by_metric, print_summary
 
 GOLDEN_PATH = "goldens/correctness_goldens.json"
-JUDGE_MODEL = OpenAIModel(model="openai/gpt-oss-20b",
+JUDGE_MODEL = OpenAIModel(model="openai/gpt-oss-120b",
                           base_url="https://www.zerolimitai.com/api/v1",
                           api_key=os.getenv("ZEROLIMIT_API_KEY"),
                           temperature=0)

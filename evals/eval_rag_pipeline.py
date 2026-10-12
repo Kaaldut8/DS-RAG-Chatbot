@@ -21,7 +21,7 @@ from evals.harness import load_goldens, summarize_by_metric, print_summary
 os.environ["DEEPEVAL_PER_ATTEMPT_TIMEOUT_SECONDS_OVERRIDE"] = "300"
 
 GOLDEN_PATH = "goldens/faithfulness_dataset.json"   # reuse the queries
-JUDGE_MODEL = OpenAIModel(model="openai/gpt-oss-20b",
+JUDGE_MODEL = OpenAIModel(model="openai/gpt-oss-120b",
                           base_url="https://www.zerolimitai.com/api/v1",
                           api_key=os.getenv("ZEROLIMIT_API_KEY"),
                           temperature=0)

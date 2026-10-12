@@ -17,7 +17,7 @@ from src.reranker import RerankingRetriever
 os.environ["DEEPEVAL_PER_ATTEMPT_TIMEOUT_SECONDS_OVERRIDE"] = "300"
 
 GOLDEN_PATH = "goldens/retriever_goldens.json"
-JUDGE_MODEL = OpenAIModel(model="openai/gpt-oss-20b",
+JUDGE_MODEL = OpenAIModel(model="openai/gpt-oss-120b",
                           base_url="https://www.zerolimitai.com/api/v1",
                           api_key=os.getenv("ZEROLIMIT_API_KEY"),
                           temperature=0)
@@ -65,7 +65,7 @@ def run(retriever):
             "chunk_size": 800,
             "chunk_overlap": 100,
             "top_k": 5,
-            "judge_model": "nvidia/nemotron-3-super-120b-a12b",
+            "judge_model": "openai/gpt-oss-120b",
             "golden_set": GOLDEN_PATH,
         },
         async_config=AsyncConfig(max_concurrent=5)
